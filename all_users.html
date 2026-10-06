@@ -1,0 +1,203 @@
+{% extends "base.html" %}
+
+{% block title %}
+FitBuddy | Users
+{% endblock %}
+
+
+{% block content %}
+
+<section class="result-header">
+
+    <div>
+
+        <span class="eyebrow">
+            ADMIN
+        </span>
+
+        <h1>
+            All Users
+        </h1>
+
+        <p>
+            View saved FitBuddy profiles and plans.
+        </p>
+
+    </div>
+
+    <a
+        href="/"
+        class="secondary-button"
+    >
+        Back Home
+    </a>
+
+</section>
+
+
+{% if users %}
+
+<div class="table-card">
+
+<table>
+
+<thead>
+
+<tr>
+
+    <th>User</th>
+
+    <th>Profile</th>
+
+    <th>Goal</th>
+
+    <th>Intensity</th>
+
+    <th>Original Plan</th>
+
+    <th>Updated Plan</th>
+
+    <th>Action</th>
+
+</tr>
+
+</thead>
+
+
+<tbody>
+
+{% for user in users %}
+
+<tr>
+
+    <td>
+
+        <strong>
+            {{ user.username }}
+        </strong>
+
+        <small>
+            {{ user.user_id }}
+        </small>
+
+    </td>
+
+
+    <td>
+
+        {{ user.age }} years
+
+        <br>
+
+        {{ user.weight }} kg
+
+    </td>
+
+
+    <td>
+        {{ user.goal|title }}
+    </td>
+
+
+    <td>
+        {{ user.intensity|title }}
+    </td>
+
+
+    <td>
+
+        <details>
+
+            <summary>
+                View
+            </summary>
+
+            <pre class="small-plan">
+{{ user.original_plan }}
+            </pre>
+
+        </details>
+
+    </td>
+
+
+    <td>
+
+        {% if user.updated_plan %}
+
+        <details>
+
+            <summary>
+                View
+            </summary>
+
+            <pre class="small-plan">
+{{ user.updated_plan }}
+            </pre>
+
+        </details>
+
+        {% else %}
+
+        <span class="muted">
+            Not updated
+        </span>
+
+        {% endif %}
+
+    </td>
+
+
+    <td>
+
+        <form
+            method="post"
+            action="/delete-user/{{ user.user_id }}"
+            onsubmit="return confirm('Delete this user?')"
+        >
+
+            <button
+                type="submit"
+                class="delete-button"
+            >
+                Delete
+            </button>
+
+        </form>
+
+    </td>
+
+</tr>
+
+{% endfor %}
+
+</tbody>
+
+</table>
+
+</div>
+
+{% else %}
+
+<div class="empty">
+
+    <h2>
+        No users yet
+    </h2>
+
+    <p>
+        Create a plan first.
+    </p>
+
+    <a
+        href="/"
+        class="primary-button"
+    >
+        Create Plan
+    </a>
+
+</div>
+
+{% endif %}
+
+{% endblock %}

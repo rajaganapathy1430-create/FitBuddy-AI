@@ -1,0 +1,180 @@
+{% extends "base.html" %}
+
+{% block title %}
+FitBuddy | Your Plan
+{% endblock %}
+
+
+{% block content %}
+
+<section class="result-header">
+
+    <div>
+
+        <span class="eyebrow">
+            PERSONALIZED FITNESS PLAN
+        </span>
+
+        <h1>
+            Hello {{ username }} 👋
+        </h1>
+
+        <p>
+            Your personalized seven-day plan is ready.
+        </p>
+
+    </div>
+
+    <a
+        href="/"
+        class="secondary-button"
+    >
+        Create Another
+    </a>
+
+</section>
+
+
+{% if message %}
+
+<div class="success">
+    {{ message }}
+</div>
+
+{% endif %}
+
+
+<section class="profile">
+
+    <div>
+        <small>Name</small>
+        <strong>{{ username }}</strong>
+    </div>
+
+    <div>
+        <small>User ID</small>
+        <strong>{{ user_id }}</strong>
+    </div>
+
+    <div>
+        <small>Age</small>
+        <strong>{{ age }}</strong>
+    </div>
+
+    <div>
+        <small>Weight</small>
+        <strong>{{ weight }} kg</strong>
+    </div>
+
+    <div>
+        <small>Goal</small>
+        <strong>{{ goal|title }}</strong>
+    </div>
+
+    <div>
+        <small>Intensity</small>
+        <strong>{{ intensity|title }}</strong>
+    </div>
+
+</section>
+
+
+<section class="result-grid">
+
+    <article class="plan-card">
+
+        <span class="badge">
+            7-DAY WORKOUT PLAN
+        </span>
+
+        <h2>
+            {% if feedback %}
+                Updated Plan
+            {% else %}
+                Your Plan
+            {% endif %}
+        </h2>
+
+        <pre>{{ workout_plan }}</pre>
+
+    </article>
+
+
+    <aside class="tip-card">
+
+        <span class="badge">
+            NUTRITION / RECOVERY
+        </span>
+
+        <h2>
+            AI Tip
+        </h2>
+
+        <p>
+            {{ nutrition_tip }}
+        </p>
+
+    </aside>
+
+</section>
+
+
+<section class="feedback-card">
+
+    <span class="badge">
+        ADAPT YOUR PLAN
+    </span>
+
+    <h2>
+        Want to change something?
+    </h2>
+
+    <p>
+        Tell FitBuddy what you want to modify.
+    </p>
+
+    <form
+        method="post"
+        action="/submit-feedback"
+    >
+
+        <input
+            type="hidden"
+            name="user_id"
+            value="{{ user_id }}"
+        >
+
+        <textarea
+            name="feedback"
+            rows="5"
+            maxlength="2000"
+            placeholder="Example: Add more cardio and make Day 4 a recovery day."
+            required
+        ></textarea>
+
+        <button type="submit">
+            Update My Plan
+        </button>
+
+    </form>
+
+</section>
+
+
+{% if feedback %}
+
+<section class="feedback-history">
+
+    <span class="badge">
+        LAST FEEDBACK
+    </span>
+
+    <p>
+        {{ feedback }}
+    </p>
+
+</section>
+
+{% endif %}
+
+{% endblock %}
